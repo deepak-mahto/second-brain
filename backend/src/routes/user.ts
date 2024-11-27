@@ -2,14 +2,14 @@ import { Router, Request, Response } from "express";
 import signupBodySchema from "../types/signup";
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { User } from "../db";
+import { User } from "../database/db";
 const userRouter: any = Router();
 
 type signupBodyType = z.infer<typeof signupBodySchema>;
 
 userRouter.post("/signup", async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  const { success, data } = signupBodySchema.safeParse(req.body);
+  const signupBody: signupBodyType = req.body;
+  const { success } = signupBodySchema.safeParse(req.body);
 
   if (!success) {
     return res.status(411).json({
@@ -17,7 +17,7 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
     });
   }
   const existingUser = await User.findOne({
-    username: username,
+    username: signupBody.username,
   });
 
   if (existingUser) {
@@ -26,10 +26,10 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
     });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 5);
+  const hashedPassword = await bcrypt.hash(signupBody.password, 5);
 
   await User.create({
-    username: username,
+    username: signupBody.username,
     password: hashedPassword,
   });
 

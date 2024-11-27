@@ -11,14 +11,15 @@ const userRouter: any = Router();
 type signupBodyType = z.infer<typeof signupBodySchema>;
 
 userRouter.post("/signup", async (req: Request, res: Response) => {
-  const signupBody: signupBodyType = req.body;
-  const { success } = signupBodySchema.safeParse(req.body);
+  const { success, data } = signupBodySchema.safeParse(req.body);
 
   if (!success) {
     return res.status(411).json({
       message: "Error in inputs",
     });
   }
+  const signupBody: signupBodyType = data;
+
   const existingUser = await User.findOne({
     username: signupBody.username,
   });

@@ -37,4 +37,32 @@ contentRouter.post("/", userMiddleware, async (req: Request, res: Response) => {
   });
 });
 
+contentRouter.get("/", userMiddleware, async (req: Request, res: Response) => {
+  const userId = req.userId;
+  const content = await Content.find({
+    userId: userId,
+  }).populate("userId", "username");
+
+  res.json({
+    content,
+  });
+});
+
+contentRouter.delete(
+  "/",
+  userMiddleware,
+  async (req: Request, res: Response) => {
+    const contentId = req.body.contentId;
+
+    await Content.deleteMany({
+      contentId,
+      userId: req.userId,
+    });
+
+    res.json({
+      message: "Deleted",
+    });
+  }
+);
+
 export default contentRouter;

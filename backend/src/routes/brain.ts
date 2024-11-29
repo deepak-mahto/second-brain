@@ -26,7 +26,7 @@ brainRouter.post(
         hash: hash,
       });
       res.json({
-        message: hash,
+        hash: hash,
       });
     } else {
       await Link.deleteOne({

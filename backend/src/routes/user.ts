@@ -32,14 +32,24 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
 
   const hashedPassword = await bcrypt.hash(signupBody.password, 5);
 
-  await User.create({
+  const user = await User.create({
     username: signupBody.username,
     password: hashedPassword,
   });
 
-  res.json({
-    message: "Signed up",
-  });
+  if (user) {
+    const token = Jwt.sign(
+      {
+        userId: user._id,
+      },
+      JWT_SECRET
+    );
+
+    res.json({
+      message: "Signed up",
+      token: token,
+    });
+  }
 });
 
 type signinBodyType = z.infer<typeof signinBodySchema>;

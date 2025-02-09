@@ -3,12 +3,12 @@ import { ShareIcon } from "../icons/ShareIcon";
 interface CardProps {
   title: string;
   link: string;
-  type: "twitter" | "youtube";
+  type: "tweet" | "video";
 }
 
 export function Card({ title, link, type }: CardProps) {
   return (
-    <div className="p-4 bg-white rounded-lg border border-gray-200 max-w-80 min-w-72 shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="p-4 bg-white rounded-lg border max-w-80 min-w-72 shadow-sm hover:shadow-md transition-shadow duration-200">
       <div className="flex justify-between items-center">
         <div className="flex items-center text-md font-medium text-gray-700">
           <div className="pr-2 text-gray-500">
@@ -31,7 +31,7 @@ export function Card({ title, link, type }: CardProps) {
       </div>
 
       <div className="pt-4">
-        {type === "youtube" && (
+        {type === "video" && (
           <iframe
             className="w-full rounded-lg"
             src={link.replace("watch", "embed").replace("?v=", "/")}
@@ -42,7 +42,7 @@ export function Card({ title, link, type }: CardProps) {
           ></iframe>
         )}
 
-        {type === "twitter" && (
+        {type === "tweet" && (
           <blockquote className="twitter-tweet">
             <a href={link.replace("x.com", "twitter.com")}></a>
           </blockquote>

@@ -18,13 +18,12 @@ export function Dashboard() {
   const shareBrain = () => {};
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex">
       <Sidebar />
 
-      <main className="ml-72 p-8">
+      <main className="flex-1 p-8 ml-0 md:ml-72">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">My Second Brain</h1>
-          <div className="flex gap-4">
+          <div className="flex gap-4 justify-end w-full">
             <Button
               onClick={() => setModalOpen(true)}
               variant="primary"
@@ -40,7 +39,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {contents.map((content: any, index) => (
             <Card key={index} {...content} />
           ))}

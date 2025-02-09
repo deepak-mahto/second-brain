@@ -6,8 +6,8 @@ import { BACKEND_URL } from "../config";
 import axios from "axios";
 
 enum ContentType {
-  Youtube = "youtube",
-  Twitter = "twitter",
+  Youtube = "video",
+  Twitter = "tweet",
 }
 
 export function CreateContentModal({
@@ -50,8 +50,12 @@ export function CreateContentModal({
               </button>
             </div>
             <div className="space-y-4">
-              <Input reference={titleRef} placeholder="Title" />
-              <Input reference={linkRef} placeholder="Link" />
+              <Input
+                reference={titleRef}
+                placeholder="Title"
+                inputType="text"
+              />
+              <Input reference={linkRef} placeholder="Link" inputType="text" />
               <div>
                 <h3 className="text-sm font-medium text-gray-700 mb-2">Type</h3>
                 <div className="flex gap-2">

@@ -17,7 +17,7 @@ const variantClasses = {
 };
 
 const defaultStyles =
-  "px-6 py-2 rounded-lg font-medium flex items-center justify-center transition-all duration-200 ease-in-out";
+  "px-6 py-2 rounded-lg font-medium flex items-center justify-center transition-all duration-200 ease-in-out text-sm px-4 py-2";
 
 export function Button({
   variant,

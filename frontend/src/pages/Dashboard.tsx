@@ -21,25 +21,23 @@ export function Dashboard() {
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar />
 
-      <main className="flex-1 p-8 ml-0 md:ml-72">
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex gap-4 justify-end w-full">
-            <Button
-              onClick={() => setModalOpen(true)}
-              variant="primary"
-              text="Add Content"
-              startIcon={<PlusIcon />}
-            />
-            <Button
-              onClick={shareBrain}
-              variant="secondary"
-              text="Share Brain"
-              startIcon={<ShareIcon />}
-            />
-          </div>
+      <main className="flex-1 p-4 md:p-8 ml-0 md:ml-72">
+        <div className="flex justify-end gap-2 mb-8">
+          <Button
+            onClick={() => setModalOpen(true)}
+            variant="primary"
+            text="Add Content"
+            startIcon={<PlusIcon />}
+          />
+          <Button
+            onClick={shareBrain}
+            variant="secondary"
+            text="Share Brain"
+            startIcon={<ShareIcon />}
+          />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {contents.map((content: any, index) => (
             <Card key={index} {...content} />
           ))}

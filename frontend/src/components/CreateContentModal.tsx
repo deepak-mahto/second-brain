@@ -39,7 +39,7 @@ export function CreateContentModal({
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
-          <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+          <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-4 md:p-6 mx-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Create Content</h2>
               <button

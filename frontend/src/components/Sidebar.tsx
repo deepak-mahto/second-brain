@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Logo } from "../icons/Logo";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
@@ -8,6 +8,22 @@ import { MenuIcon } from "../icons/MenuIcon";
 
 export function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -40,7 +56,7 @@ export function Sidebar() {
 
         <button
           onClick={closeSidebar}
-          className="absolute top-4 right-4 p-2 text-gray-600 hover:text-purple-600"
+          className="absolute top-4 right-4 p-2 text-gray-600 hover:text-purple-600 md:hidden"
         >
           <CloseIcon />
         </button>

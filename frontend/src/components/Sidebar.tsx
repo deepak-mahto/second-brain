@@ -29,41 +29,47 @@ export function Sidebar() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
   return (
     <>
-      <button
-        onClick={toggleSidebar}
-        className="fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-md md:hidden"
-      >
-        {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
-      </button>
-
       <div
-        className={`h-screen bg-white border-r w-72 fixed left-0 top-0 pl-6 shadow-sm transition-transform duration-200 ease-in-out ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0`}
+        className={`h-screen bg-white border-r fixed left-0 top-0 pl-6 shadow-sm transition-all duration-200 ease-in-out ${
+          isSidebarOpen ? "w-72" : "w-20 pl-4"
+        }`}
       >
-        <div className="flex text-2xl pt-8 items-center font-semibold text-gray-800">
-          <div className="pr-2 text-purple-600">
+        <div className="flex text-2xl pt-8 items-center justify-between pr-4 font-semibold text-gray-800">
+          <div
+            className={`flex items-center pr-2 text-purple-600 gap-2 ${
+              !isSidebarOpen && "hidden"
+            }`}
+          >
             <Logo />
+            <div>SecondBrain</div>
           </div>
-          Brainly
+
+          <button
+            onClick={toggleSidebar}
+            className="top-4 left-4 z-50 p-1 bg-white rounded-lg shadow-md cursor-pointer"
+          >
+            {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
+          </button>
         </div>
 
-        <button
-          onClick={closeSidebar}
-          className="absolute top-4 right-4 p-2 text-gray-600 hover:text-purple-600 md:hidden"
+        <div
+          className={`${
+            !isSidebarOpen &&
+            "flex items-center flex-col justify-center pt-4 pl-0 space-y-0"
+          } pt-8 pl-4 space-y-2`}
         >
-          <CloseIcon />
-        </button>
-
-        <div className="pt-8 pl-4 space-y-2">
-          <SidebarItem text="Twitter" icon={<TwitterIcon />} />
-          <SidebarItem text="Youtube" icon={<YoutubeIcon />} />
+          <SidebarItem
+            text="Twitter"
+            icon={<TwitterIcon />}
+            isSidebarOpen={isSidebarOpen}
+          />
+          <SidebarItem
+            text="Youtube"
+            icon={<YoutubeIcon />}
+            isSidebarOpen={isSidebarOpen}
+          />
         </div>
       </div>
     </>

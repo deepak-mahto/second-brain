@@ -5,7 +5,6 @@ interface TwitterContentProps {
 }
 
 export function TwitterContent({ contents }: TwitterContentProps) {
-  console.log(contents);
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Twitter Posts</h2>

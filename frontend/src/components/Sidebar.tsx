@@ -5,6 +5,8 @@ import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { SidebarItem } from "./SidebarItem";
 import { CloseIcon } from "../icons/CloseIcon";
 import { MenuIcon } from "../icons/MenuIcon";
+import { LogoutIcon } from "../icons/LogoutIcon";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   onItemClick: (item: "tweet" | "video") => void;
@@ -12,6 +14,7 @@ interface SidebarProps {
 
 export function Sidebar({ onItemClick }: SidebarProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,6 +33,11 @@ export function Sidebar({ onItemClick }: SidebarProps) {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/signin");
   };
 
   return (
@@ -79,6 +87,22 @@ export function Sidebar({ onItemClick }: SidebarProps) {
           isSidebarOpen={isSidebarOpen}
           onClick={() => onItemClick("video")}
         />
+      </div>
+
+      <div
+        className={`absolute bottom-4 left-4 right-4 ${
+          !isSidebarOpen && "flex justify-center"
+        }`}
+      >
+        <button
+          onClick={handleLogout}
+          className={`flex items-center w-full p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 ${
+            !isSidebarOpen && "justify-center"
+          }`}
+        >
+          <LogoutIcon />
+          {isSidebarOpen && <span className="ml-2">Logout</span>}
+        </button>
       </div>
     </div>
   );

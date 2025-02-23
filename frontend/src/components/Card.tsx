@@ -11,7 +11,7 @@ interface CardProps {
 
 export function Card({ title, link, type }: CardProps) {
   return (
-    <div className="p-4 bg-white rounded-lg border w-full shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="p-4 w-full">
       <div className="flex justify-between items-center">
         <div className="flex items-center text-md font-medium text-gray-700">
           <div className="pr-2 text-gray-500">

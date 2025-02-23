@@ -8,12 +8,15 @@ import { Sidebar } from "../components/Sidebar";
 import { useContent } from "../hooks/useContent";
 import { TwitterContent } from "../components/TwitterContent";
 import { YoutubeContent } from "../components/YoutubeContent";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<"tweet" | "video" | null>(
     null
   );
+  const [shareLink, setShareLink] = useState<string | null>(null);
 
   const { contents, refresh } = useContent(selectedItem || undefined);
 
@@ -21,7 +24,40 @@ export function Dashboard() {
     refresh();
   }, [modalOpen]);
 
-  const shareBrain = () => {};
+  const shareBrain = async () => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/brain/share`,
+        {
+          share: true,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (response.data.hash) {
+        const link = `${window.location.origin}/api/v1/brain/${response.data.hash}`;
+        setShareLink(link);
+
+        const userConfirmed = window.confirm(
+          `${link}\n\nClick "OK" to copy the link.`
+        );
+
+        if (userConfirmed) {
+          await navigator.clipboard.writeText(link);
+          alert("Link copied to clipboard!");
+        }
+      } else {
+        setShareLink(null);
+        alert("Your brain is no longer shared.");
+      }
+    } catch (error) {
+      alert("Failed to share brain. Please try again");
+    }
+  };
 
   const handleItemClick = (item: "tweet" | "video") => {
     setSelectedItem(item);

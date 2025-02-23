@@ -17,7 +17,7 @@ brainRouter.post(
       });
       if (existingLink) {
         return res.json({
-          message: existingLink.hash,
+          hash: existingLink.hash,
         });
       }
 

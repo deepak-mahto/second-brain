@@ -10,6 +10,7 @@ import { TwitterContent } from "../components/TwitterContent";
 import { YoutubeContent } from "../components/YoutubeContent";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { ShareLinkModal } from "../components/ShareLinkModal";
 
 export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,6 +18,7 @@ export function Dashboard() {
     null
   );
   const [shareLink, setShareLink] = useState<string | null>(null);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
 
   const { contents, refresh } = useContent(selectedItem || undefined);
 
@@ -41,15 +43,7 @@ export function Dashboard() {
       if (response.data.hash) {
         const link = `${window.location.origin}/api/v1/brain/${response.data.hash}`;
         setShareLink(link);
-
-        const userConfirmed = window.confirm(
-          `${link}\n\nClick "OK" to copy the link.`
-        );
-
-        if (userConfirmed) {
-          await navigator.clipboard.writeText(link);
-          alert("Link copied to clipboard!");
-        }
+        setShareModalOpen(true);
       } else {
         setShareLink(null);
         alert("Your brain is no longer shared.");
@@ -98,6 +92,12 @@ export function Dashboard() {
       <CreateContentModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
+      />
+
+      <ShareLinkModal
+        open={shareModalOpen}
+        onClose={() => setShareModalOpen(false)}
+        shareLink={shareLink}
       />
     </div>
   );

@@ -49,13 +49,13 @@ contentRouter.get("/", userMiddleware, async (req: Request, res: Response) => {
 });
 
 contentRouter.delete(
-  "/",
+  "/:contentId",
   userMiddleware,
   async (req: Request, res: Response) => {
-    const contentId = req.body.contentId;
+    const contentId = req.params.contentId;
 
-    await Content.deleteMany({
-      contentId,
+    await Content.deleteOne({
+      _id: contentId,
       userId: req.userId,
     });
 

@@ -1,15 +1,26 @@
+import axios from "axios";
 import { DeleteIcon } from "../icons/DeleteIcon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
+import { BACKEND_URL } from "../config";
 
 interface CardProps {
+  _id: string;
   title: string;
   link: string;
   type: "tweet" | "video";
 }
 
-export function Card({ title, link, type }: CardProps) {
+const removeContent = async (_id: string) => {
+  await axios.delete(`${BACKEND_URL}/api/v1/content/${_id}`, {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+
+export function Card({ _id, title, link, type }: CardProps) {
   return (
     <div className="p-4 w-full">
       <div className="flex justify-between items-center">
@@ -28,7 +39,10 @@ export function Card({ title, link, type }: CardProps) {
           >
             <ShareIcon />
           </a>
-          <button className="text-gray-500 hover:text-purple-600 transition-colors duration-200">
+          <button
+            onClick={() => removeContent(_id)}
+            className="text-gray-500 hover:text-purple-600 transition-colors duration-200"
+          >
             <DeleteIcon />
           </button>
         </div>
